@@ -5,10 +5,12 @@ from __future__ import annotations
 import shutil
 import subprocess
 import tempfile
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
-from .models import FloorArtifact, Hint, Vote
+
+from pydantic import ConfigDict
+
+from .models import FloorArtifact, Hint, Vote, NDModel
 
 
 def docker_available() -> bool:
@@ -28,8 +30,8 @@ def docker_available() -> bool:
         return False
 
 
-@dataclass
-class SandboxResult:
+class SandboxResult(NDModel):
+    model_config = ConfigDict(frozen=True)
     stdout: str
     stderr: str
     exit_code: int

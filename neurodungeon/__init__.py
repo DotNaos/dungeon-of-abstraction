@@ -1,8 +1,11 @@
 """NeuroDungeon package entry point."""
 
+__version__ = "0.3.0.dev0"
+
 from .models import Vote, Hint, FloorArtifact, RunConfig
+from . import dataclasses as dataclasses
+from .migrate import v02_to_v03
 from .agents import Player, Enemy, Boss
-from .agents_llm import PlayerLLM, LintEnemyLLM
 from .sandbox import Sandbox, RuntimeEnemy
 from .config import load_config
 from .report import render_report
@@ -17,14 +20,14 @@ __all__ = [
     "Player",
     "Enemy",
     "Boss",
-    "PlayerLLM",
-    "LintEnemyLLM",
     "Sandbox",
     "RuntimeEnemy",
     "load_config",
     "render_report",
     "Orchestrator",
     "cli",
+    "dataclasses",
+    "v02_to_v03",
 ]
 
 try:

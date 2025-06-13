@@ -77,6 +77,14 @@ orch = Orchestrator(player, enemies_per_floor, boss)
 result = orch.run("build a web app", RunConfig(run_id="my_run"))
 ```
 
+Pydantic models provide convenient JSON helpers:
+
+```python
+data = cfg.model_dump_json()
+cfg2 = RunConfig.model_validate_json(data)
+assert cfg == cfg2
+```
+
 The orchestrator compares the number of rejections on a floor against a
 threshold. If ``rejection_thresh`` is greater than ``0`` that value is used
 directly. Passing ``rejection_thresh=0`` enables the dynamic rule
@@ -92,6 +100,13 @@ absolute path—in all cases the `run_id` is nested inside it.
 Limiting to a single attempt per floor keeps the number of LLM calls and
 token usage predictable, which is critical when runs are chained or
 budgeted.
+
+## Upgrading from 0.2
+
+Version 0.3 replaces the dataclass-based models with Pydantic models. The
+legacy dataclasses remain available under ``neurodungeon.dataclasses`` and
+emit ``DeprecationWarning`` on use. Convert existing objects with
+``neurodungeon.migrate.v02_to_v03``.
 
 ### Building a wheel
 

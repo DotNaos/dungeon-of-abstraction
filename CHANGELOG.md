@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.3.0.dev0 - 2025-06-13
+- Switched all models to Pydantic BaseModel
+- Added backwards-compatibility dataclasses with deprecation warnings
+- Added `__version__` constant and bumped package version
+- Convenience `model_dump_json` helpers demonstrated in README
+- Added `migrate.v02_to_v03` helper for upgrading old dataclass objects
+
 ## v0.1 - 2025-06-13
 - Initial release implementing NeuroDungeon Protocol v0.1
 - Refined orchestrator API and improved tests

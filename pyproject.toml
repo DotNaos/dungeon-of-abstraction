@@ -18,11 +18,13 @@ dependencies = [
     "pytest>=8.4.0",
     "pytest-mock>=3.14.1",
     "pyyaml>=6.0.2",
+    "flask>=3.1.1",
 ]
 
 
 [project.scripts]
 neurodungeon = "neurodungeon.run:cli"
+neurodungeon-web = "neurodungeon.webapp:main"
 
 [project.optional-dependencies]
 dev = [

@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.hypothesis/
+runs/
+.venv/
+.env

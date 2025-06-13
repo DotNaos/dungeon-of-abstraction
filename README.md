@@ -1,12 +1,24 @@
 # NeuroDungeon
 
-`neurodungeon` is a reference implementation of the NeuroDungeon Protocol v0.1.
+`neurodungeon` is a reference implementation of the NeuroDungeon Protocol v0.2.
 
 ## Installation
 
 ```bash
-pip install -e .
+curl -LsSf https://astral.sh/uv/install.sh | sh  # once per machine
+uv venv                             # creates .venv/
+uv add -e .[dev,llm]                # editable install with extras
+uv sync --locked --all-extras --dev # reproducible setup from uv.lock
 ```
+
+`jinja2` is installed by default so report generation works out of the box.
+
+Optional dependencies:
+
+| Extra | Description |
+|-------|-------------|
+| `dev` | Tools for testing and type checking |
+| `llm` | OpenAI client for LLM-powered agents |
 
 ## Usage
 
@@ -19,10 +31,40 @@ python demo_neurodungeon.py
 You can also invoke the stubbed CLI directly and choose where artifacts are stored:
 
 ```bash
-neurodungeon --goal "build a web app" --persist-dir runs
+uv run neurodungeon --goal "build a web app" --persist-dir runs --enemies 2
 ```
-After the run completes, the CLI prints the run ID and the path to the generated
-`log.jsonl` file for easy inspection.
+After the run completes the CLI prints
+
+```
+Run cli_run complete — log: /abs/path/to/runs/cli_run/log.jsonl
+```
+with the absolute path to the `log.jsonl` file for easy inspection.
+
+### Running with real LLMs
+
+Install the dev tools and the `llm` extra (which pulls in the OpenAI client)
+then set `OPENAI_API_KEY` (and optionally `OPENAI_MODEL`):
+
+```bash
+uv add -e .[dev,llm]
+export OPENAI_API_KEY=sk-...
+uv run neurodungeon --goal "build a web app" --persist-dir runs --config dungeon.yml
+```
+
+The LLM-backed agents will use these credentials to generate artifacts.
+
+### Dungeon config
+
+Provide a YAML file to control lives and floors:
+
+```yaml
+lives: 3
+llm_call_limit: 20
+floors: [1, 2]
+```
+
+Invoke with `--config dungeon.yml` to override CLI flags. See
+`examples/basic.yml` for a ready-to-use template.
 
 ## Extending
 
@@ -35,9 +77,10 @@ orch = Orchestrator(player, enemies_per_floor, boss)
 result = orch.run("build a web app", RunConfig(run_id="my_run"))
 ```
 
-The orchestrator compares the number of rejections on a floor against
-`max(rejection_thresh, ceil(len(enemies) * 0.5))`. Set
-`rejection_thresh` to `0` to use the default `ceil(E * 0.5)` value.
+The orchestrator compares the number of rejections on a floor against a
+threshold. If ``rejection_thresh`` is greater than ``0`` that value is used
+directly. Passing ``rejection_thresh=0`` enables the dynamic rule
+``ceil(E * 0.5)`` where ``E`` is the number of enemies on the floor.
 If the threshold is met, one life is lost. Hints gathered on each floor are always passed to
 the next `Player.act()` call, even if the floor was accepted. The
 `llm_call_limit` is inclusive, so a value of `50` allows exactly 50

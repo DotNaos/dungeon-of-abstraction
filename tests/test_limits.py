@@ -1,6 +1,7 @@
 from neurodungeon.agents import StubBoss, StubEnemy, StubPlayer
 from neurodungeon.models import RunConfig, Vote, FloorArtifact, Hint
 from neurodungeon.orchestrator import Orchestrator
+from datetime import datetime
 import json
 import pytest
 
@@ -47,6 +48,11 @@ def test_audit_log(tmp_path):
     data = [json.loads(line) for line in log]
     assert any("life_lost" in d for d in data)
     assert data[-1]["boss_vote"] == "ACCEPT"
+    for rec in data:
+        assert "timestamp" in rec
+        # ensure valid ISO-8601, Z suffix
+        assert rec["timestamp"].endswith("Z")
+        datetime.fromisoformat(rec["timestamp"].replace("Z", "+00:00"))
 
 
 def test_stub_enemy_hints_tuple() -> None:

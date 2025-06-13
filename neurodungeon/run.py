@@ -6,6 +6,8 @@ from pathlib import Path
 from .agents import StubBoss, StubEnemy, StubPlayer
 from .models import RunConfig
 from .orchestrator import Orchestrator
+from .config import load_config
+from .report import render_report
 
 
 def cli() -> None:
@@ -13,16 +15,40 @@ def cli() -> None:
     parser.add_argument("--goal", required=True)
     parser.add_argument("--lives", type=int, default=3)
     parser.add_argument("--persist-dir", type=Path, default=None)
+    parser.add_argument("--enemies", type=int, default=8)
+    parser.add_argument("--config", type=Path, default=None)
     args = parser.parse_args()
 
-    enemies = [[StubEnemy()] for _ in range(8)]
+    if args.config:
+        cfg_data = load_config(args.config)
+        lives = cfg_data.get("lives", args.lives)
+        enemies_num = cfg_data.get("enemies", args.enemies)
+        floors = cfg_data.get("floors")
+        llm_limit = cfg_data.get("llm_call_limit", 50)
+    else:
+        lives = args.lives
+        enemies_num = args.enemies
+        floors = None
+        llm_limit = 50
+
+    if floors:
+        enemies = [[StubEnemy() for _ in range(n)] for n in floors]
+    else:
+        enemies = [[StubEnemy()] for _ in range(enemies_num)]
     orch = Orchestrator(StubPlayer(), enemies, StubBoss())
-    cfg = RunConfig(run_id="cli_run", lives=args.lives, persist_dir=args.persist_dir)
-    result = orch.run(args.goal, cfg)
-    log_path = (cfg.persist_dir / "log.jsonl") if cfg.persist_dir else Path(cfg.run_id) / "log.jsonl"
-    print(result.value)
-    print(f"Run ID: {cfg.run_id}")
-    print(f"Audit log: {log_path.resolve()}")
+    cfg = RunConfig(
+        run_id="cli_run",
+        lives=lives,
+        persist_dir=args.persist_dir,
+        llm_call_limit=llm_limit,
+    )
+    orch.run(args.goal, cfg)
+    log_path = cfg.persist_dir / "log.jsonl" if cfg.persist_dir else Path(cfg.run_id) / "log.jsonl"
+    print(f"Run {cfg.run_id} complete — log: {log_path.resolve()}")
+    report_md = render_report(cfg.run_id, orch.artifacts, log_path, orch.llm_calls, cfg.lives)
+    run_dir = cfg.persist_dir
+    assert run_dir is not None
+    (run_dir / "report.md").write_text(report_md)
 
 
 if __name__ == "__main__":

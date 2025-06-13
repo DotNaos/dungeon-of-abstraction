@@ -1,0 +1,4 @@
+# Basic NeuroDungeon configuration
+lives: 3
+llm_call_limit: 20
+floors: [1, 2]

@@ -76,7 +76,10 @@ class Orchestrator:
                 hints.extend(enemy_hints)
 
             reject_count = votes.count(Vote.REJECT)
-            threshold = max(cfg.rejection_thresh, math.ceil(len(enemies) * 0.5))
+            if cfg.rejection_thresh == 0:
+                threshold = math.ceil(len(enemies) * 0.5)
+            else:
+                threshold = cfg.rejection_thresh
             if reject_count >= threshold:
                 lives -= 1
                 self.lives = lives

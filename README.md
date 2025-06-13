@@ -6,9 +6,7 @@
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh  # once per machine
-uv venv                             # creates .venv/
-uv add -e .[dev,llm]                # editable install with extras
-uv sync --locked --all-extras --dev # reproducible setup from uv.lock
+uv sync --all-extras --dev              # creates .venv/ and installs all dependencies
 ```
 
 `jinja2` is installed by default so report generation works out of the box.
@@ -46,7 +44,7 @@ Install the dev tools and the `llm` extra (which pulls in the OpenAI client)
 then set `OPENAI_API_KEY` (and optionally `OPENAI_MODEL`):
 
 ```bash
-uv add -e .[dev,llm]
+uv sync --all-extras --dev
 export OPENAI_API_KEY=sk-...
 uv run neurodungeon --goal "build a web app" --persist-dir runs --config dungeon.yml
 ```

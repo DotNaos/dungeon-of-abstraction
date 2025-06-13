@@ -8,7 +8,7 @@ from .migrate import v02_to_v03
 from .agents import Player, Enemy, Boss
 from .sandbox import Sandbox, RuntimeEnemy
 from .config import load_config
-from .report import render_report
+from .report import render_report, render_report_html
 from .orchestrator import Orchestrator
 from .run import cli
 
@@ -24,6 +24,7 @@ __all__ = [
     "RuntimeEnemy",
     "load_config",
     "render_report",
+    "render_report_html",
     "Orchestrator",
     "cli",
     "dataclasses",

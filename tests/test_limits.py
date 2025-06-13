@@ -56,5 +56,7 @@ def test_audit_log(tmp_path):
 
 
 def test_stub_enemy_hints_tuple() -> None:
-    vote, hints = StubEnemy().evaluate(FloorArtifact(0, 0, "", ".txt"))
+    vote, hints = StubEnemy().evaluate(
+        FloorArtifact(floor=0, revision=0, content="", ext=".txt")
+    )
     assert isinstance(hints, tuple)

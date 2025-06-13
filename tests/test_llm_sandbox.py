@@ -27,7 +27,9 @@ def test_lint_enemy_llm(monkeypatch):
     fake_client.chat.completions.create.return_value = fake_resp
     monkeypatch.setattr("neurodungeon.agents_llm.OpenAI", lambda api_key=None: fake_client)
     enemy = LintEnemyLLM()
-    vote, hints = enemy.evaluate(FloorArtifact(0, 0, "code", ".py"))
+    vote, hints = enemy.evaluate(
+        FloorArtifact(floor=0, revision=0, content="code", ext=".py")
+    )
     assert vote is Vote.ACCEPT
     assert hints[0].text == "hi"
 
@@ -42,5 +44,7 @@ def test_sandbox_exec():
     result = sandbox.run(code, tests)
     assert result.exit_code == 0 and not result.timed_out
     enemy = RuntimeEnemy(sandbox, tests)
-    vote, _ = enemy.evaluate(FloorArtifact(0, 0, code, ".py"))
+    vote, _ = enemy.evaluate(
+        FloorArtifact(floor=0, revision=0, content=code, ext=".py")
+    )
     assert vote is Vote.ACCEPT

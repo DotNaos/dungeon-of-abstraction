@@ -295,7 +295,12 @@ name = "neurodungeon"
 version = "0.2.0"
 source = { editable = "." }
 dependencies = [
+    { name = "hypothesis" },
     { name = "jinja2" },
+    { name = "mypy" },
+    { name = "openai" },
+    { name = "pytest" },
+    { name = "pytest-mock" },
     { name = "pyyaml" },
 ]
 
@@ -308,17 +313,24 @@ dev = [
 ]
 llm = [
     { name = "openai" },
+    { name = "pyyaml" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "hypothesis", specifier = ">=6.135.9" },
     { name = "hypothesis", marker = "extra == 'dev'" },
     { name = "jinja2" },
+    { name = "mypy", specifier = ">=1.16.0" },
     { name = "mypy", marker = "extra == 'dev'" },
+    { name = "openai", specifier = ">=1.86.0" },
     { name = "openai", marker = "extra == 'llm'", specifier = ">=1,<2" },
+    { name = "pytest", specifier = ">=8.4.0" },
     { name = "pytest", marker = "extra == 'dev'" },
+    { name = "pytest-mock", specifier = ">=3.14.1" },
     { name = "pytest-mock", marker = "extra == 'dev'" },
-    { name = "pyyaml" },
+    { name = "pyyaml", specifier = ">=6.0.2" },
+    { name = "pyyaml", marker = "extra == 'llm'" },
 ]
 provides-extras = ["dev", "llm"]
 

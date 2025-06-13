@@ -10,8 +10,13 @@ authors = [{ name = "OpenAI", email = "noreply@example.com" }]
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "hypothesis>=6.135.9",
     "jinja2",
-    "pyyaml",
+    "mypy>=1.16.0",
+    "openai>=1.86.0",
+    "pytest>=8.4.0",
+    "pytest-mock>=3.14.1",
+    "pyyaml>=6.0.2",
 ]
 
 

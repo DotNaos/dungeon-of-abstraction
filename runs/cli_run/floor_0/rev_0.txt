@@ -1,1 +1,10 @@
-artifact floor 0 rev 0 (0 hints)
+1. Create a game board with a grid layout.
+2. Implement a snake that moves around the board.
+3. Add food items that the snake can eat to grow in size.
+4. Include collision detection between the snake's head and its body or the board edges.
+5. Keep track of the score based on how many food items the snake eats.
+6. End the game if the snake collides with itself or the board edges.
+7. Allow player to control the snake's movement using arrow keys or other controls.
+8. Display a game over message when the game ends.
+9. Provide an option to restart the game.
+10. Design the game with colorful graphics and animations to make it visually appealing.

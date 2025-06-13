@@ -43,13 +43,13 @@ class LintEnemyLLM(Enemy):
     """Enemy that asks the LLM to lint code."""
 
     def __init__(self, model: str | None = None) -> None:
-        self.model: str = model or os.getenv("OPENAI_MODEL") or "gpt-3.5-turbo"
+        self.model: str = model or os.getenv("OPENAI_MODEL") or "gpt-4.1-nano"
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     def evaluate(self, artifact: FloorArtifact) -> Tuple[Vote, Sequence[Hint]]:
         prompt = (
             "You are a code reviewer. "
-            "Return ACCEPT or REJECT on the first line followed by up to 3 hints.\n" 
+            "Return ACCEPT or REJECT on the first line followed by up to 3 hints.\n"
             "Focus on style or bugs.\n"
             f"Code:\n{artifact.content}"
         )

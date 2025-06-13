@@ -7,3 +7,19 @@
 {"floor": 6, "enemy_idx": 0, "vote": "REJECT", "hints": ["improve"], "timestamp": "2025-06-13T09:44:07.473677Z"}
 {"floor": 7, "enemy_idx": 0, "vote": "REJECT", "hints": ["improve"], "timestamp": "2025-06-13T09:44:07.473786Z"}
 {"boss_vote": "ACCEPT", "timestamp": "2025-06-13T09:44:07.473813Z"}
+{"floor": 0, "enemy_idx": 0, "vote": "REJECT", "hints": ["improve"], "timestamp": "2025-06-13T11:53:23.746016Z"}
+{"floor": 1, "enemy_idx": 0, "vote": "REJECT", "hints": ["improve"], "timestamp": "2025-06-13T11:53:23.746474Z"}
+{"floor": 1, "enemy_idx": 1, "vote": "REJECT", "hints": ["improve"], "timestamp": "2025-06-13T11:53:23.746512Z"}
+{"boss_vote": "ACCEPT", "timestamp": "2025-06-13T11:53:23.746541Z"}
+{"floor": 0, "enemy_idx": 0, "vote": "REJECT", "hints": ["improve"], "timestamp": "2025-06-13T11:54:09.225459Z"}
+{"floor": 1, "enemy_idx": 0, "vote": "REJECT", "hints": ["improve"], "timestamp": "2025-06-13T11:54:09.225681Z"}
+{"floor": 1, "enemy_idx": 1, "vote": "REJECT", "hints": ["improve"], "timestamp": "2025-06-13T11:54:09.225712Z"}
+{"boss_vote": "ACCEPT", "timestamp": "2025-06-13T11:54:09.225736Z"}
+{"floor": 0, "enemy_idx": 0, "vote": "REJECT", "hints": ["Lacks actual code implementation; needs concrete code snippets with functions, variables, or logic for review."], "timestamp": "2025-06-13T12:09:10.799808Z"}
+{"floor": 1, "enemy_idx": 0, "vote": "REJECT", "hints": ["1. Insufficient code details: no actual code provided, only descriptions.  ", "2. Lack of implementation: cannot assess style or bugs without concrete code.  ", "3. Clarify the specific files or snippets for reviewing."], "timestamp": "2025-06-13T12:09:13.714864Z"}
+{"floor": 1, "enemy_idx": 1, "vote": "REJECT", "hints": ["Insufficient detail: code snippets or specific implementation needed to evaluate."], "timestamp": "2025-06-13T12:09:14.445384Z"}
+{"boss_vote": "ACCEPT", "timestamp": "2025-06-13T12:09:14.446121Z"}
+{"floor": 0, "enemy_idx": 0, "vote": "REJECT", "hints": ["1. No actual code implementation provided.  ", "2. Instructions lack concrete variable and function definitions.  ", "3. No consideration for game loop or event handling logic."], "timestamp": "2025-06-13T12:10:15.369937Z"}
+{"floor": 1, "enemy_idx": 0, "vote": "REJECT", "hints": ["1. The description lacks actual code, making it impossible to evaluate style or bugs.  ", "2. Ensure to include code snippets for meaningful review.  ", "3. Clarify whether implementation details or specific language are involved."], "timestamp": "2025-06-13T12:10:17.908791Z"}
+{"floor": 1, "enemy_idx": 1, "vote": "REJECT", "hints": ["Missing actual implementation code; cannot review style or bugs."], "timestamp": "2025-06-13T12:10:18.797303Z"}
+{"boss_vote": "ACCEPT", "timestamp": "2025-06-13T12:10:18.797868Z"}

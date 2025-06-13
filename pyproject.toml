@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neurodungeon"
+version = "0.1"
+description = "Reference implementation of the NeuroDungeon protocol"
+authors = [{name="OpenAI", email="noreply@example.com"}]
+readme = "README.md"
+requires-python = ">=3.11"
+
+[project.scripts]
+neurodungeon = "neurodungeon.run:cli"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true

@@ -1,0 +1,5 @@
+{"floor": 0, "enemy_idx": 0, "vote": "REJECT", "hints": ["improve"], "timestamp": "2025-06-13T09:28:08.760178Z"}
+{"floor": 0, "life_lost": true, "timestamp": "2025-06-13T09:28:08.760235Z"}
+{"floor": 1, "enemy_idx": 0, "vote": "REJECT", "hints": ["improve"], "timestamp": "2025-06-13T09:28:08.760339Z"}
+{"floor": 1, "life_lost": true, "timestamp": "2025-06-13T09:28:08.760363Z"}
+{"boss_vote": "ACCEPT", "timestamp": "2025-06-13T09:28:08.760384Z"}

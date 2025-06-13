@@ -1,0 +1,8 @@
+{
+  "name": "neurodungeon",
+  "version": "0.1",
+  "dependencies": [
+    {"name": "pytest", "type": "dev"},
+    {"name": "hypothesis", "type": "dev"}
+  ]
+}

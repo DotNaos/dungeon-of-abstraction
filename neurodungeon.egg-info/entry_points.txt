@@ -1,0 +1,2 @@
+[console_scripts]
+neurodungeon = neurodungeon.run:cli

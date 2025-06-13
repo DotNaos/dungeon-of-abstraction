@@ -1,3 +1,11 @@
+Metadata-Version: 2.4
+Name: neurodungeon
+Version: 0.1
+Summary: Reference implementation of the NeuroDungeon protocol
+Author-email: OpenAI <noreply@example.com>
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+
 # NeuroDungeon
 
 `neurodungeon` is a reference implementation of the NeuroDungeon Protocol v0.1.

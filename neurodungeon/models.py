@@ -50,6 +50,9 @@ class RunConfig:
     llm_call_limit: int = 50
     max_artifact_bytes: int = 32 * 1024 * 1024
     persist_dir: Optional[Path] = None
+    sandbox_cpu: float = 1.0
+    sandbox_memory_mb: int = 256
+    sandbox_timeout_s: int = 10
 
     def __post_init__(self) -> None:
         if self.persist_dir is None:

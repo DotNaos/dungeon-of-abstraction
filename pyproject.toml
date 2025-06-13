@@ -4,16 +4,32 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "neurodungeon"
-version = "0.1"
+version = "0.2.0"
 description = "Reference implementation of the NeuroDungeon protocol"
 authors = [{ name = "OpenAI", email = "noreply@example.com" }]
 readme = "README.md"
 requires-python = ">=3.11"
+dependencies = ["jinja2"]
 
 
 [project.scripts]
 neurodungeon = "neurodungeon.run:cli"
 
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-mock",
+    "hypothesis",
+    "mypy",
+]
+llm = [
+    "openai>=1,<2",
+    "pyyaml",
+]
+
 [tool.mypy]
 python_version = "3.11"
 strict = true
+
+[tool.setuptools]
+packages = ["neurodungeon"]

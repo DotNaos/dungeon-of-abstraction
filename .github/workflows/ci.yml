@@ -1,9 +1,5 @@
 name: CI
-on:
-  pull_request:
-    branches: [ work ]
-  push:
-    branches: [ work ]
+on: [push, pull_request]
 
 jobs:
   test:
@@ -13,12 +9,25 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e .
-          pip install hypothesis pytest mypy
-      - name: Static type check
-        run: mypy --strict neurodungeon
-      - name: Test suite
-        run: pytest -q
+      - run: pip install -e .[dev,llm]
+      - run: python -m compileall -q neurodungeon
+      - run: mypy --strict neurodungeon
+      - run: pytest -q -m "not docker"
+
+  docker:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:dind
+        options: --privileged
+    env:
+      DOCKER_HOST: tcp://localhost:2375
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: docker info
+      - run: pip install -e .[dev,llm]
+      - run: mypy --strict neurodungeon
+      - run: pytest -q

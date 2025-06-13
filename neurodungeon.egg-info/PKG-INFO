@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: neurodungeon
-Version: 0.2.0
+Version: 0.3.0.dev0
 Summary: Reference implementation of the NeuroDungeon protocol
 Author-email: OpenAI <noreply@example.com>
 Requires-Python: >=3.11
@@ -8,6 +8,7 @@ Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: hypothesis>=6.135.9
 Requires-Dist: jinja2
+Requires-Dist: pydantic>=2
 Requires-Dist: mypy>=1.16.0
 Requires-Dist: openai>=1.86.0
 Requires-Dist: pytest>=8.4.0
@@ -20,7 +21,6 @@ Requires-Dist: hypothesis; extra == "dev"
 Requires-Dist: mypy; extra == "dev"
 Provides-Extra: llm
 Requires-Dist: openai<2,>=1; extra == "llm"
-Requires-Dist: pyyaml; extra == "llm"
 Dynamic: license-file
 
 # NeuroDungeon
@@ -30,12 +30,20 @@ Dynamic: license-file
 ## Installation
 
 ```bash
-pip install -e .
-# for development with optional LLM features
-pip install -e .[dev,llm]
+curl -LsSf https://astral.sh/uv/install.sh | sh  # once per machine
+uv venv                             # creates .venv/
+uv add -e .[dev,llm]                # editable install with extras
+uv sync --locked --all-extras --dev # reproducible setup from uv.lock
 ```
 
 `jinja2` is installed by default so report generation works out of the box.
+
+Optional dependencies:
+
+| Extra | Description |
+|-------|-------------|
+| `dev` | Tools for testing and type checking |
+| `llm` | OpenAI client for LLM-powered agents |
 
 ## Usage
 
@@ -45,10 +53,10 @@ Run the demo script:
 python demo_neurodungeon.py
 ```
 
-You can also invoke the stubbed CLI directly and choose where artifacts are stored:
+You can also invoke the CLI directly and choose where artifacts are stored:
 
 ```bash
-neurodungeon --goal "build a web app" --persist-dir runs --enemies 2
+uv run neurodungeon --goal "build a web app" --persist-dir runs --enemies 2
 ```
 After the run completes the CLI prints
 
@@ -59,13 +67,13 @@ with the absolute path to the `log.jsonl` file for easy inspection.
 
 ### Running with real LLMs
 
-Install the dev and LLM extras then set `OPENAI_API_KEY` (and optionally
-`OPENAI_MODEL`):
+Install the dev tools and the `llm` extra (which pulls in the OpenAI client)
+then set `OPENAI_API_KEY` (and optionally `OPENAI_MODEL`):
 
 ```bash
-pip install -e .[dev,llm]
+uv add -e .[dev,llm]
 export OPENAI_API_KEY=sk-...
-neurodungeon --goal "build a web app" --persist-dir runs --config dungeon.yml
+uv run neurodungeon --goal "build a web app" --persist-dir runs --config dungeon.yml
 ```
 
 The LLM-backed agents will use these credentials to generate artifacts.
@@ -94,6 +102,14 @@ orch = Orchestrator(player, enemies_per_floor, boss)
 result = orch.run("build a web app", RunConfig(run_id="my_run"))
 ```
 
+Pydantic models provide convenient JSON helpers:
+
+```python
+data = cfg.model_dump_json()
+cfg2 = RunConfig.model_validate_json(data)
+assert cfg == cfg2
+```
+
 The orchestrator compares the number of rejections on a floor against a
 threshold. If ``rejection_thresh`` is greater than ``0`` that value is used
 directly. Passing ``rejection_thresh=0`` enables the dynamic rule
@@ -109,6 +125,13 @@ absolute path—in all cases the `run_id` is nested inside it.
 Limiting to a single attempt per floor keeps the number of LLM calls and
 token usage predictable, which is critical when runs are chained or
 budgeted.
+
+## Upgrading from 0.2
+
+Version 0.3 replaces the dataclass-based models with Pydantic models. The
+legacy dataclasses remain available under ``neurodungeon.dataclasses`` and
+emit ``DeprecationWarning`` on use. Convert existing objects with
+``neurodungeon.migrate.v02_to_v03``.
 
 ### Building a wheel
 

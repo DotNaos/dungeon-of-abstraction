@@ -5,6 +5,8 @@ neurodungeon/__init__.py
 neurodungeon/agents.py
 neurodungeon/agents_llm.py
 neurodungeon/config.py
+neurodungeon/dataclasses.py
+neurodungeon/migrate.py
 neurodungeon/models.py
 neurodungeon/orchestrator.py
 neurodungeon/report.py

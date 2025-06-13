@@ -292,13 +292,14 @@ wheels = [
 
 [[package]]
 name = "neurodungeon"
-version = "0.2.0"
+version = "0.3.0.dev0"
 source = { editable = "." }
 dependencies = [
     { name = "hypothesis" },
     { name = "jinja2" },
     { name = "mypy" },
     { name = "openai" },
+    { name = "pydantic" },
     { name = "pytest" },
     { name = "pytest-mock" },
     { name = "pyyaml" },
@@ -313,7 +314,6 @@ dev = [
 ]
 llm = [
     { name = "openai" },
-    { name = "pyyaml" },
 ]
 
 [package.metadata]
@@ -325,12 +325,12 @@ requires-dist = [
     { name = "mypy", marker = "extra == 'dev'" },
     { name = "openai", specifier = ">=1.86.0" },
     { name = "openai", marker = "extra == 'llm'", specifier = ">=1,<2" },
+    { name = "pydantic", specifier = ">=2" },
     { name = "pytest", specifier = ">=8.4.0" },
     { name = "pytest", marker = "extra == 'dev'" },
     { name = "pytest-mock", specifier = ">=3.14.1" },
     { name = "pytest-mock", marker = "extra == 'dev'" },
     { name = "pyyaml", specifier = ">=6.0.2" },
-    { name = "pyyaml", marker = "extra == 'llm'" },
 ]
 provides-extras = ["dev", "llm"]
 

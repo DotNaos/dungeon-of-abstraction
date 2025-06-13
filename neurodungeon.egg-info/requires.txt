@@ -1,5 +1,6 @@
 hypothesis>=6.135.9
 jinja2
+pydantic>=2
 mypy>=1.16.0
 openai>=1.86.0
 pytest>=8.4.0
@@ -14,4 +15,3 @@ mypy
 
 [llm]
 openai<2,>=1
-pyyaml

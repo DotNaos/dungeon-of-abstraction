@@ -26,3 +26,11 @@ __all__ = [
     "Orchestrator",
     "cli",
 ]
+
+try:
+    from .agents_llm import PlayerLLM, LintEnemyLLM
+except ModuleNotFoundError:
+    # openai dependency is optional; avoid import error when extras are missing
+    pass
+else:
+    __all__ += ["PlayerLLM", "LintEnemyLLM"]

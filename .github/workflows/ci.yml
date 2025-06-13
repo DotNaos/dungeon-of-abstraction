@@ -1,33 +1,39 @@
-name: CI
+name: tests
 on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: '3.11'
-      - run: pip install -e .[dev,llm]
-      - run: python -m compileall -q neurodungeon
-      - run: mypy --strict neurodungeon
-      - run: pytest -q -m "not docker"
+          version: "0.7.13"
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --locked --all-extras --dev
+
+      - name: Run tests
+        run: uv run pytest -q -m "not docker"
 
   docker:
     runs-on: ubuntu-latest
-    services:
-      docker:
-        image: docker:dind
-        options: --privileged
-    env:
-      DOCKER_HOST: tcp://localhost:2375
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: '3.11'
-      - run: docker info
-      - run: pip install -e .[dev,llm]
-      - run: mypy --strict neurodungeon
-      - run: pytest -q
+          version: "0.7.13"
+          enable-cache: true
+
+      - run: docker --version
+
+      - name: Install dependencies
+        run: uv sync --locked --all-extras --dev
+
+      - name: Run Docker tests
+        run: uv run pytest -q -m docker

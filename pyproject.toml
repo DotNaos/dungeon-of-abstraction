@@ -32,7 +32,6 @@ dev = [
 ]
 llm = [
     "openai>=1,<2",
-    "pyyaml",
 ]
 
 [tool.mypy]

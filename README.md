@@ -5,12 +5,20 @@
 ## Installation
 
 ```bash
-pip install -e .
-# for development with optional LLM features
-pip install -e .[dev,llm]
+curl -LsSf https://astral.sh/uv/install.sh | sh  # once per machine
+uv venv                             # creates .venv/
+uv add -e .[dev,llm]                # editable install with extras
+uv sync --locked --all-extras --dev # reproducible setup from uv.lock
 ```
 
 `jinja2` is installed by default so report generation works out of the box.
+
+Optional dependencies:
+
+| Extra | Description |
+|-------|-------------|
+| `dev` | Tools for testing and type checking |
+| `llm` | OpenAI client for LLM-powered agents |
 
 ## Usage
 
@@ -23,7 +31,7 @@ python demo_neurodungeon.py
 You can also invoke the CLI directly and choose where artifacts are stored:
 
 ```bash
-neurodungeon --goal "build a web app" --persist-dir runs --enemies 2
+uv run neurodungeon --goal "build a web app" --persist-dir runs --enemies 2
 ```
 After the run completes the CLI prints
 
@@ -34,13 +42,13 @@ with the absolute path to the `log.jsonl` file for easy inspection.
 
 ### Running with real LLMs
 
-Install the dev and LLM extras then set `OPENAI_API_KEY` (and optionally
-`OPENAI_MODEL`):
+Install the dev tools and the `llm` extra (which pulls in the OpenAI client)
+then set `OPENAI_API_KEY` (and optionally `OPENAI_MODEL`):
 
 ```bash
-pip install -e .[dev,llm]
+uv add -e .[dev,llm]
 export OPENAI_API_KEY=sk-...
-neurodungeon --goal "build a web app" --persist-dir runs --config dungeon.yml
+uv run neurodungeon --goal "build a web app" --persist-dir runs --config dungeon.yml
 ```
 
 The LLM-backed agents will use these credentials to generate artifacts.

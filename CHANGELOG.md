@@ -16,13 +16,14 @@
 - Docker-based sandbox and runtime enemy
 - YAML dungeon configuration with `--config` flag
 - Markdown report generation stored next to each run
-- Optional extras reorganised (`llm` includes PyYAML & Jinja2)
-- CI installs docker-cli and sets `DOCKER_HOST` for sandbox tests
+- Optional extras reorganised (`llm` only installs the OpenAI client)
+- CI runs sandbox tests using the host Docker daemon
 
-## v0.2-rc1 - 2025-06-13
+## v0.2.0-rc1 - 2025-06-13
 - Move `jinja2` to core dependency so reports work without extras
 - Added `examples/basic.yml` configuration sample
 - Added MIT `LICENSE`
 - Report file now tested for creation
-- Docker job uses `docker info` instead of installing the CLI
+- Docker job checks `docker --version` and `docker info`
 - CI compiles sources to catch stray `__pycache__` files
+- Switched to `uv` for development and CI; workflow installs deps via `uv sync`

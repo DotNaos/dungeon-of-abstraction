@@ -13,7 +13,19 @@ from .models import FloorArtifact, Hint, Vote
 
 def docker_available() -> bool:
     """Return True if Docker is available on the host."""
-    return shutil.which("docker") is not None
+    if shutil.which("docker") is None:
+        return False
+    try:
+        subprocess.run(
+            ["docker", "info"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=1,
+            check=True,
+        )
+        return True
+    except Exception:
+        return False
 
 
 @dataclass

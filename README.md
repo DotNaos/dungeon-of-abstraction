@@ -20,7 +20,7 @@ Run the demo script:
 python demo_neurodungeon.py
 ```
 
-You can also invoke the stubbed CLI directly and choose where artifacts are stored:
+You can also invoke the CLI directly and choose where artifacts are stored:
 
 ```bash
 neurodungeon --goal "build a web app" --persist-dir runs --enemies 2

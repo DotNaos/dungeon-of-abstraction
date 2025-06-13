@@ -1,1 +1,6 @@
-artifact floor 1 rev 0 (1 hints)
+Artifact: 
+- Game window with a grid layout
+- Snake character that moves in four directions
+- Food items that appear in random grid locations
+- Score display 
+- Game over screen with option to restart

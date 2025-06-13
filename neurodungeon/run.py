@@ -3,7 +3,9 @@
 from argparse import ArgumentParser
 from pathlib import Path
 
+import os
 from .agents import StubBoss, StubEnemy, StubPlayer
+from .agents_llm import PlayerLLM, LintEnemyLLM
 from .models import RunConfig
 from .orchestrator import Orchestrator
 from .config import load_config
@@ -11,7 +13,7 @@ from .report import render_report
 
 
 def cli() -> None:
-    parser = ArgumentParser(description="Run NeuroDungeon with stub agents")
+    parser = ArgumentParser(description="Run NeuroDungeon with stub or LLM-backed agents")
     parser.add_argument("--goal", required=True)
     parser.add_argument("--lives", type=int, default=3)
     parser.add_argument("--persist-dir", type=Path, default=None)
@@ -31,11 +33,18 @@ def cli() -> None:
         floors = None
         llm_limit = 50
 
+    use_llm = bool(args.config and os.getenv("OPENAI_API_KEY"))
     if floors:
-        enemies = [[StubEnemy() for _ in range(n)] for n in floors]
+        enemies = [
+            [LintEnemyLLM() if use_llm else StubEnemy() for _ in range(n)]
+            for n in floors
+        ]
     else:
-        enemies = [[StubEnemy()] for _ in range(enemies_num)]
-    orch = Orchestrator(StubPlayer(), enemies, StubBoss())
+        enemies = [
+            [LintEnemyLLM() if use_llm else StubEnemy()] for _ in range(enemies_num)
+        ]
+    player = PlayerLLM(args.goal) if use_llm else StubPlayer()
+    orch = Orchestrator(player, enemies, StubBoss())
     cfg = RunConfig(
         run_id="cli_run",
         lives=lives,
